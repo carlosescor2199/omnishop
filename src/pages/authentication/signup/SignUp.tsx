@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./signup.module.css";
 import Header from "../../../components/authentication/header/Header";
 import AuthForm from "../../../components/authentication/auth-form/AuthForm";
@@ -20,29 +19,38 @@ const SIGNUP_BUTTONS = [
 ];
 
 export default function SignUp() {
-  const [error, setError] = useState({
-    nombre: false,
-    apellido: false,
-    email: false,
-    password: false,
+  const [values, onChange, errors, initErrors, hasErrors] = useValues({
+    initialValues: {
+      nombre: "",
+      apellido: "",
+      email: "",
+      password: "",
+    },
+    initialErrors: {
+      nombre: false,
+      apellido: false,
+      email: false,
+      password: false,
+    },
   });
 
-  const [values, onChange] = useValues({
-    nombre: "",
-    apellido: "",
-    email: "",
-    password: "",
-  });
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    let aux: any = {};
-    Object.keys(values).forEach((key) => {
-      if (values[key].trim() === "") {
-        aux[key] = true;
-      }
-    });
-    setError(aux);
+    initErrors();
+    const res = await fetch('https://apingweb.com/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: values.nombre + " " + values.apellido,
+        email: values.email,
+        phone:"5555551234",
+        password: values.password,
+        password_confirmation: values.password
+    })
+    })
+
+    const user = await res.json();
+    console.log(user)
   };
 
   return (
@@ -51,7 +59,7 @@ export default function SignUp() {
       <AuthForm buttons={SIGNUP_BUTTONS} width={312} height={276.5}>
         <form
           className={`${styles.form} ml-16 mr-16 mb-32`}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           <div className={`${styles.content} ml-16 mr-17`}>
             <div className={`${styles.title} mb-12`}>
@@ -65,7 +73,7 @@ export default function SignUp() {
                 placeholder="Nombre"
                 width={221}
                 height={16}
-                error={error.nombre}
+                error={errors.nombre}
                 onChange={onChange}
               />
             </div>
@@ -77,7 +85,7 @@ export default function SignUp() {
                 placeholder="Apellido"
                 width={221}
                 height={16}
-                error={error.apellido}
+                error={errors.apellido}
                 onChange={onChange}
               />
             </div>
@@ -89,11 +97,11 @@ export default function SignUp() {
                 placeholder="E-mail"
                 width={221}
                 height={16}
-                error={error.email}
+                error={errors.email}
                 onChange={onChange}
               />
             </div>
-            <div className="mb-8">
+            <div className={hasErrors() ? "" : "mb-8"}>
               <TextField
                 name="password"
                 value={values?.password}
@@ -101,10 +109,15 @@ export default function SignUp() {
                 placeholder="Contraseña"
                 width={221}
                 height={16}
-                error={error.password}
+                error={errors.password}
                 onChange={onChange}
               />
             </div>
+            {hasErrors() && (
+              <div className={`${styles.error} mt-4 mb-8`}>
+                Por favor, diligencia los campos marcados
+              </div>
+            )}
             <div>
               <CustomButton label="Regístrate" width={248} height={41} />
             </div>

@@ -8,6 +8,10 @@
     opacity: 1;
 }
 
+.textfield::placeholder {
+    color: #9F9F9F
+}
+
 .textfield:focus {
     outline: none;
     border: 1.5px solid #7315be;
@@ -25,7 +29,7 @@
 
 .textfield_error:focus {
     outline: none;
-    border: 1.5px solid #FF006C;
+    border: 1px solid #FF006C;
 }
 
 .textfield_error::placeholder {

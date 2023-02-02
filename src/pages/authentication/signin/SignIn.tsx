@@ -5,6 +5,7 @@ import TextField from "../../../components/authentication/text-field/TextField";
 import CheckBox from "../../../components/authentication/checkbox/CheckBox";
 import CustomButton from "../../../components/common/button/CustomButton";
 import { Link } from "react-router-dom";
+import useValues from "../../../hooks/useValues";
 
 const SIGNIN_BUTTONS = [
   {
@@ -20,11 +21,42 @@ const SIGNIN_BUTTONS = [
 ];
 
 export default function SignIn() {
+
+  const [values, onChange, errors, initErrors, hasErrors] = useValues({
+    initialValues: {
+      identifier: "",
+      password: "",
+    },
+    initialErrors: {
+      identifier: false,
+      password: false,
+    },
+  });
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    initErrors();
+    const res = await fetch('https://dummyjson.com/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        
+        username: values.identifier,
+        password: values.password,
+        // expiresInMins: 60, // optional
+      })
+    })
+
+    const user = await res.json();
+    console.log(user);
+
+  }
+
   return (
     <div className={styles.signin}>
       <Header />
       <AuthForm buttons={SIGNIN_BUTTONS} width={312} height={276.5}>
-        <form className={`${styles.form} ml-16 mr-16 mb-32`}>
+        <form className={`${styles.form} ml-16 mr-16 mb-32`} onSubmit={handleSubmit}>
           <div className={`${styles.content} ml-16 mr-17`}>
             <div className={`${styles.title} mb-12`}>
               <h3>Ingresa con tus datos</h3>
@@ -32,25 +64,32 @@ export default function SignIn() {
             <div className="mb-8">
               <TextField
                 name="identifier"
-                value={"fd"}
+                value={values.identifier}
                 type="text"
                 placeholder="Email o nombre de usuario"
                 width={221}
                 height={16}
-                error={true}
+                onChange={onChange}
+                error={errors.identifier}
               />
             </div>
-            <div className="mb-12">
+            <div className={hasErrors() ? "" : "mb-12"}>
               <TextField
                 name="password"
-                value={"fd"}
+                value={values.password}
                 type="password"
                 placeholder="Ingresa contraseña"
                 width={221}
                 height={16}
-                error={true}
+                onChange={onChange}
+                error={errors.password}
               />
             </div>
+            {hasErrors() && (
+              <div className={`${styles.error} mt-4 mb-8`}>
+                Por favor, diligencia los campos marcados
+              </div>
+            )}
             <div className={styles.subscribe_section}>
               <CheckBox label="Suscríbete al newsletter" />
             </div>
