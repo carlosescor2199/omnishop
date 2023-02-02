@@ -36,12 +36,12 @@ export default function SignIn() {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     initErrors();
-    const res = await fetch('https://dummyjson.com/auth/login', {
+    const res = await fetch('https://apingweb.com/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         
-        username: values.identifier,
+        email: values.identifier,
         password: values.password,
         // expiresInMins: 60, // optional
       })
