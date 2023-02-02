@@ -4,6 +4,7 @@ import AuthForm from "../../../components/authentication/auth-form/AuthForm";
 import TextField from "../../../components/authentication/text-field/TextField";
 import CustomButton from "../../../components/common/button/CustomButton";
 import useValues from "../../../hooks/useValues";
+import useAuthentication from "../../../hooks/useAuthentication";
 
 const SIGNUP_BUTTONS = [
   {
@@ -34,24 +35,7 @@ export default function SignUp() {
     },
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    initErrors();
-    const res = await fetch('https://apingweb.com/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: values.nombre + " " + values.apellido,
-        email: values.email,
-        phone:"5555551234",
-        password: values.password,
-        password_confirmation: values.password
-    })
-    })
-
-    const user = await res.json();
-    console.log(user)
-  };
+  const [_, onSignUp, error] = useAuthentication(values, initErrors);
 
   return (
     <div className={styles.signup}>
@@ -59,7 +43,7 @@ export default function SignUp() {
       <AuthForm buttons={SIGNUP_BUTTONS} width={312} height={276.5}>
         <form
           className={`${styles.form} ml-16 mr-16 mb-32`}
-          onSubmit={handleSubmit}
+          onSubmit={onSignUp}
         >
           <div className={`${styles.content} ml-16 mr-17`}>
             <div className={`${styles.title} mb-12`}>

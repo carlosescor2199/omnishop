@@ -6,6 +6,7 @@ import CheckBox from "../../../components/authentication/checkbox/CheckBox";
 import CustomButton from "../../../components/common/button/CustomButton";
 import { Link } from "react-router-dom";
 import useValues from "../../../hooks/useValues";
+import useAuthentication from "../../../hooks/useAuthentication";
 
 const SIGNIN_BUTTONS = [
   {
@@ -33,30 +34,13 @@ export default function SignIn() {
     },
   });
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    initErrors();
-    const res = await fetch('https://apingweb.com/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        
-        email: values.identifier,
-        password: values.password,
-        // expiresInMins: 60, // optional
-      })
-    })
-
-    const user = await res.json();
-    console.log(user);
-
-  }
+  const [onSignIn, _, error] = useAuthentication(values, initErrors);
 
   return (
     <div className={styles.signin}>
       <Header />
       <AuthForm buttons={SIGNIN_BUTTONS} width={312} height={276.5}>
-        <form className={`${styles.form} ml-16 mr-16 mb-32`} onSubmit={handleSubmit}>
+        <form className={`${styles.form} ml-16 mr-16 mb-32`} onSubmit={onSignIn}>
           <div className={`${styles.content} ml-16 mr-17`}>
             <div className={`${styles.title} mb-12`}>
               <h3>Ingresa con tus datos</h3>
@@ -82,12 +66,12 @@ export default function SignIn() {
                 width={221}
                 height={16}
                 onChange={onChange}
-                error={errors.password}
+                error={errors.password || error}
               />
             </div>
-            {hasErrors() && (
+            {(hasErrors() || error) && (
               <div className={`${styles.error} mt-4 mb-8`}>
-                Por favor, diligencia los campos marcados
+                {error ? "contraseña incorrecta" : "Por favor, diligencia los campos marcados"}
               </div>
             )}
             <div className={styles.subscribe_section}>
