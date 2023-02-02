@@ -1,0 +1,36 @@
+.textfield {
+    font: normal normal normal 12px/16px Poppins;
+    letter-spacing: 0px;
+    color: #9F9F9F;
+    opacity: 1;
+    border: 1px solid #EDF1F7;
+    border-radius: 16px;
+    opacity: 1;
+}
+
+.textfield:focus {
+    outline: none;
+    border: 1.5px solid #7315be;
+}
+
+.textfield_error {
+    font: normal normal normal 12px/16px Poppins;
+    letter-spacing: 0px;
+    color: #FF006C;
+    opacity: 1;
+    border: 1px solid #FF006C;
+    border-radius: 16px;
+    opacity: 1;
+}
+
+.textfield_error:focus {
+    outline: none;
+    border: 1.5px solid #FF006C;
+}
+
+.textfield_error::placeholder {
+    font: normal normal normal 12px/16px Poppins;
+    letter-spacing: 0px;
+    color: #FF006C;
+    opacity: 1;
+}

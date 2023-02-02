@@ -1,0 +1,16 @@
+.form {
+  width: fit-content;
+  height: fit-content;
+  background: #ffffff;
+  border: none;
+  border-radius: 24px;
+  margin: 60px 0 0 24px;
+  padding: 0;
+}
+
+.form legend {
+  width: 200px;
+  height: 42px;
+  margin: 0;
+  padding: 0 0 4px 0;
+}
