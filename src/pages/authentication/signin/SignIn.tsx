@@ -4,7 +4,7 @@ import AuthForm from "../../../components/authentication/auth-form/AuthForm";
 import TextField from "../../../components/authentication/text-field/TextField";
 import CheckBox from "../../../components/authentication/checkbox/CheckBox";
 import CustomButton from "../../../components/common/button/CustomButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useValues from "../../../hooks/useValues";
 import { FormEvent, useState } from "react";
 
@@ -22,6 +22,7 @@ const SIGNIN_BUTTONS = [
 ];
 
 export default function SignIn() {
+  const navigate = useNavigate();
   const [authError, setAuthError] = useState(false)
 
   const [values, onChange, errors, initErrors, hasErrors] = useValues({
@@ -52,7 +53,10 @@ export default function SignIn() {
 
     const user = await res.json();
     if (user.success === false) setAuthError(true);
-    localStorage.setItem("token", user.token);
+    else {
+      localStorage.setItem("token", user.token);
+      navigate("/ingresando")
+    }
   }
 
   return (

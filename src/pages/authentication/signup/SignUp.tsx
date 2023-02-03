@@ -5,6 +5,7 @@ import TextField from "../../../components/authentication/text-field/TextField";
 import CustomButton from "../../../components/common/button/CustomButton";
 import useValues from "../../../hooks/useValues";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SIGNUP_BUTTONS = [
   {
@@ -20,6 +21,7 @@ const SIGNUP_BUTTONS = [
 ];
 
 export default function SignUp() {
+  const navigate = useNavigate();
   const [authError, setAuthError] = useState(false);
   const [values, onChange, errors, initErrors, hasErrors] = useValues({
     initialValues: {
@@ -55,7 +57,10 @@ export default function SignUp() {
 
     const user = await res.json();
     if (user.success === false) setAuthError(true);
-    localStorage.setItem("token", user.token);
+    else {
+      localStorage.setItem("token", user.token);
+      navigate("/registrocompleto")
+    }
   }
 
   return (
