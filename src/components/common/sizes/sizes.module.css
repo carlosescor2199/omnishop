@@ -1,0 +1,37 @@
+.indicators {
+  display: flex;
+  justify-content: start;
+  margin-top: 0px;
+  position: relative;
+}
+
+.indicators > button {
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border-radius: 4px;
+  opacity: 1;
+  width: 32px;
+  height: 24px;
+  text-align: center;
+  font: normal normal normal 10px/16px Poppins;
+  font-size: 10px;
+  letter-spacing: 0px;
+  color: #000000;
+  border: none;
+}
+
+.indicators > button.active {
+  border: 1px solid var(--unnamed-color-7315be);
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: inset 0px 3px 6px #00000029;
+  border: 1px solid #7315be;
+  border-radius: 4px;
+  opacity: 1;
+  color: #7315be;
+  text-align: center;
+  font: normal normal bold 10px/16px Poppins;
+  font-size: 10px;
+  letter-spacing: 0px;
+  width: 32px;
+  height: 24px;
+  border: none;
+}

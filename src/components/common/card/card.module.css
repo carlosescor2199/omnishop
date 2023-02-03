@@ -1,0 +1,25 @@
+.container {
+  width: 132px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container .title {
+  margin-top: 12px;
+  text-align: left;
+  font: normal normal medium 12px/16px Poppins;
+  font-size: 12px;
+  letter-spacing: 0px;
+  color: #343434;
+  opacity: 1;
+}
+
+.container .price {
+  margin-top: 4px;
+  text-align: left;
+  font: normal normal medium 12px/16px Poppins;
+  font-size: 12px;
+  letter-spacing: 0px;
+  color: #6200ff;
+  opacity: 1;
+}
