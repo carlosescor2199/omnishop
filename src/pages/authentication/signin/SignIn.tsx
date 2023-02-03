@@ -6,7 +6,7 @@ import CheckBox from "../../../components/authentication/checkbox/CheckBox";
 import CustomButton from "../../../components/common/button/CustomButton";
 import { Link } from "react-router-dom";
 import useValues from "../../../hooks/useValues";
-import useAuthentication from "../../../hooks/useAuthentication";
+import { FormEvent, useState } from "react";
 
 const SIGNIN_BUTTONS = [
   {
@@ -22,6 +22,7 @@ const SIGNIN_BUTTONS = [
 ];
 
 export default function SignIn() {
+  const [authError, setAuthError] = useState(false)
 
   const [values, onChange, errors, initErrors, hasErrors] = useValues({
     initialValues: {
@@ -34,13 +35,31 @@ export default function SignIn() {
     },
   });
 
-  const [onSignIn, _, error] = useAuthentication(values, initErrors);
+  async function handleSignIn(e: FormEvent<HTMLFormElement>) {
+    setAuthError(false)
+    e.preventDefault();
+    initErrors();
+    if (hasErrors()) return;
+    const res = await fetch("https://apingweb.com/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: values.identifier,
+        password: values.password,
+        // expiresInMins: 60, // optional
+      }),
+    });
+
+    const user = await res.json();
+    if (user.success === false) setAuthError(true);
+    localStorage.setItem("token", user.token);
+  }
 
   return (
     <div className={styles.signin}>
       <Header />
       <AuthForm buttons={SIGNIN_BUTTONS} width={312} height={276.5}>
-        <form className={`${styles.form} ml-16 mr-16 mb-32`} onSubmit={onSignIn}>
+        <form className={`${styles.form} ml-16 mr-16 mb-32`} onSubmit={handleSignIn}>
           <div className={`${styles.content} ml-16 mr-17`}>
             <div className={`${styles.title} mb-12`}>
               <h3>Ingresa con tus datos</h3>
@@ -57,7 +76,7 @@ export default function SignIn() {
                 error={errors.identifier}
               />
             </div>
-            <div className={hasErrors() ? "" : "mb-12"}>
+            <div className={hasErrors() || authError ? "" : "mb-12"}>
               <TextField
                 name="password"
                 value={values.password}
@@ -66,12 +85,12 @@ export default function SignIn() {
                 width={221}
                 height={16}
                 onChange={onChange}
-                error={errors.password || error}
+                error={errors.password || authError}
               />
             </div>
-            {(hasErrors() || error) && (
+            {(hasErrors() || authError) && (
               <div className={`${styles.error} mt-4 mb-8`}>
-                {error ? "contraseña incorrecta" : "Por favor, diligencia los campos marcados"}
+                {authError ? "contraseña incorrecta" : "Por favor, diligencia los campos marcados"}
               </div>
             )}
             <div className={styles.subscribe_section}>
