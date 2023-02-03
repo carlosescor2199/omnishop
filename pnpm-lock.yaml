@@ -13,6 +13,8 @@ specifiers:
   react-dom: ^18.2.0
   react-router-dom: ^6.8.0
   react-scripts: 5.0.1
+  react-simple-star-rating: ^5.1.7
+  react-swipeable: ^7.0.0
   typescript: ^4.9.5
   web-vitals: ^2.1.4
 
@@ -28,6 +30,8 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.1_j5ip3o3v6sktjzl5cxtjyfbuo4
+  react-simple-star-rating: 5.1.7_biqbaboplfbrettd7655fr4n2y
+  react-swipeable: 7.0.0_react@18.2.0
   typescript: 4.9.5
   web-vitals: 2.1.4
 
@@ -8351,6 +8355,25 @@ packages:
       - webpack-cli
       - webpack-hot-middleware
       - webpack-plugin-serve
+    dev: false
+
+  /react-simple-star-rating/5.1.7_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-NTFkW8W3uwvI82Fv7JW5i7gmDjEZKxJmj+Z9vn+BjYIXT6ILdnU9qnSUP2cWrWN/WAUlue81f9SgM4CQcenltQ==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-swipeable/7.0.0_react@18.2.0:
+    resolution: {integrity: sha512-NI7KGfQ6gwNFN0Hor3vytYW3iRfMMaivGEuxcADOOfBCx/kqwXE8IfHFxEcxSUkxCYf38COLKYd9EMYZghqaUA==}
+    peerDependencies:
+      react: ^16.8.3 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react/18.2.0:

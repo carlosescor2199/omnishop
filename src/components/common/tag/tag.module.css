@@ -1,0 +1,17 @@
+.tag { 
+  width: 44px;
+  height: 24px;
+  background: #efe8ee 0% 0% no-repeat padding-box;
+  border-radius: 13px;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag span {
+  font: normal normal medium 10px/18px Poppins;
+  font-size: 10px;
+  letter-spacing: 0px;
+  color: #1d221a;
+}

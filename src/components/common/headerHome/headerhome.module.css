@@ -1,0 +1,23 @@
+.container {
+  width: 360px;
+  position: fixed;
+  display: flex;
+  z-index: 500;
+  justify-content: space-between;
+}
+
+.menu {
+    padding: 25.5px 0 0 25.5px;
+}
+
+.logo {
+  border-radius: 70% 0 100% 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 63px;
+  height: 52px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #a7a7a729;
+  opacity: 1;
+}
